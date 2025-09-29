@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ../edge_server/edge_server/
+      dockerfile: Dockerfile
+    container_name: springboot_app
+    depends_on:
+      - mysql
+      - mqtt
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/mqtt_alerts
+      SPRING_DATASOURCE_USERNAME: my_user
+      SPRING_DATASOURCE_PASSWORD: my_password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      MQTT_BROKER_URL: tcp://mqtt:1883
+    ports:
+      - "8080:8080"
+    networks:
+      - my_network
+
+  mqtt:
+    image: eclipse-mosquitto:2.0.20
+    container_name: mqtt_broker
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+    networks:
+      - my_network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: mqtt_alerts
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: my_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - my_network
+
+volumes:
+  mysql_data:
+
+networks:
+  my_network:
+
