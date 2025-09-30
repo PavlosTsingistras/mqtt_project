@@ -1,7 +1,7 @@
 # Ανάπτυξη Λογισμικού για Δίκτυα και Τηλεπικοινωνίες
 
 **XXXX XXXXX** `sdiXXXXXX`  
-**XX XXXX** `sdiXXXXX`  
+**Charalmpos Tsitsiringos** `sdi1900198`  
 **Παύλος Τσιγγίστρας**  `sdi2000264`
 
 
